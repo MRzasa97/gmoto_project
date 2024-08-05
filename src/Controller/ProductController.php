@@ -8,11 +8,7 @@ use App\Service\ProductSerializerService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+
 
 class ProductController extends AbstractController
 {
@@ -21,9 +17,8 @@ class ProductController extends AbstractController
     )
     {}
 
-    /**
-     * @Route("/api/product/{gtin}", name="get_product", methods={"GET"})
-     */
+
+    #[Route("/api/products/{gtin}", name: "get_product", methods: ["GET"])]
     public function getProduct(string $gtin): JsonResponse
     {
         $product = $this->productRepository->findOneByGtin($gtin);
@@ -35,9 +30,7 @@ class ProductController extends AbstractController
         return $this->json($product, 200, [], ['groups' => 'product:read']);
     }
 
-    /**
-     * @Route("/api/products/market/{marketCode}", name="get_products_by_market", methods={"GET"})
-     */
+    #[Route("/api/products/market/{marketCode}", name: "get_products_by_market", methods: ["GET"])]
     public function getProductsByMarketCode(string $marketCode): JsonResponse
     {
         $products = $this->productRepository->findByMarketCode($marketCode);
