@@ -1,0 +1,13 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+get_product:
+    path: /api/product/{gtin}
+    controller: App\Controller\ProductController::getProduct
+    methods: [GET]
+get_products_by_market:
+    path: /api/products/market/{marketCode}
+    controller: App\Controller\ProductController::getProductsByMarketCode
+    methods: [GET]
