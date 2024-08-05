@@ -14,12 +14,15 @@ use App\Tests\Unit\Repository\InMemory\InMemoryMarketRepository;
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\Driver\AbstractDriverException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class ProductCreationServiceTest extends TestCase
 {
     private ProductRepositoryInterface $productRepository;
     private MarketCreationService $marketCreationService;
     private ProductCreationService $productCreationService;
+    private LoggerInterface $logger;
 
     protected function setUp(): void
     {
@@ -27,9 +30,11 @@ class ProductCreationServiceTest extends TestCase
         $marketRepository = new InMemoryMarketRepository();
 
         $this->marketCreationService = new MarketCreationService($marketRepository);
+        $this->logger = new NullLogger();
         $this->productCreationService = new ProductCreationService(
             $this->productRepository,
-            $this->marketCreationService
+            $this->marketCreationService,
+            $this->logger
         );
     }
 
